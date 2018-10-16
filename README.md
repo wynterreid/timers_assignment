@@ -1,48 +1,45 @@
-# Rock, Paper, Scissors
+// Rock, Paper, Scissors
 
-You tried in the JavaScript workshop, but you were missing one crucial element: *callbacks*.
-
-Take a look at this:
-
-```js
 const readline = require('readline');
 
 const reader = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
+let answers = {
+   r: "rock",
+   p: "paper",
+   s: "scissors"
+}
 
-reader.question(`sup? \n`, (res) => {
-  console.log(`you replied: ${res}`)
-});
-```
+reader.question(`Welcome to rock, paper, scissors. Please type 'r', 'p', or 's' to make a choice.`, (res) => {
+  console.log(`You chose: ${answers[res]}. The computer is thinking ...`)
 
-`readline` is what's known as a *library*. Don't worry about what that is, precisely, yet - just know that, like class methods, it's something that Node makes available to us to use how we'd like.
+  let cAnswer = Math.floor(Math.random()*3)
 
-You can see here that we're using callbacks to *await a user's response*. The first argument of `question` prints to the console to ask a question, and the second is a callback which handles what our user might say. Once we have that response, our callback fires and we tell them what they wrote.
+  setTimeout(() => {
+      if ((cAnswer) === 0) {
+        console.log("The computer chose: Rock.")
+      } else if ((cAnswer) === 1) {
+        console.log("The computer chose: Paper.")
+      } else {
+        console.log("The computer chose: Scissors.")
+        }
+  }, 3000)
 
-Using this library, we are going to make a rock, paper, scissors game against the computer. Our finished product should converse something like this:
-
-```
-Console: `Welcome to rock, paper, scissors. Please type 'r', 'p', or 's' to make a choice.`
-User: `rock`
-Console: `You chose 'rock'. Hmm...` (setTimeout for 5 seconds here to imagine the computer thinking)
-Console: `The computer chose 'scissors'.`
-Console: `Congratulations! You win!`
-```
-
-...And then the program exits.
-
-A few notes here:
-
-* Use the full extent of the [readline library](https://node.readthedocs.io/en/latest/api/readline/) to flesh out your program's functionality.
-* The computer should make a random choice (`Math.random` might be useful here) to come up with their play.
-* You should handle wins, losses, and ties.
-
-## Bonus
-
-[Eliza](http://psych.fullerton.edu/mbirnbaum/psych101/Eliza.htm) is one of the world's first chatbots. She uses the user's response to come up with a question, mimicking a not-so-insightful therapist. She never says anything herself - she simply picks a detail the user wrote and asks a new question. Play around with her in the link above and see how this works.
-
-Your task is to use `readline` to **write a simple version of Eliza** - a chatbot that can handle any input and return an at-least-sort-of-relevant question.
-
-*Hint*: When the user says "I" or "I'm" or any word referring to themselves, that's a dead giveaway that the next thing they write will be useful to your response.
+  setTimeout(() => {
+    if (answers[res] === "rock" && cAnswer === 0) {
+    console.log (" Tie! Play Again")
+  } else if (answers[res] === "rock" && cAnswer === 1) {
+    console.log("You lose! Play Again!")
+  } else if (answers[res] === "rock" && cAnswer === 2){
+    console.log("Congrats! You Won!")
+  } else if (answers[res] === "paper" && cAnswer === 1) {
+    console.log("Tie! Play Again")
+  } else if (answers[res] === "paper" && cAnswer === 2) {
+    console.log("You lose! Play Again")
+  } else if ( answers[res] === "scissors" && cAnswer == 2) {
+    console.log("Tie! PLay Again")
+  }
+}, 4000)
+})
